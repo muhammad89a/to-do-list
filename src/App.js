@@ -1,26 +1,42 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import TodoItems from "./components/TodoItems/TodoItems"
+import AddItem from "./components/AddItem/AddItem"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+class App extends React.Component {
+
+  state = {
+    items:[
+      {id:1,name:"muhammad",age:29},
+      {id:2,name:"saleh",age:20}
+    ]
+  }
+
+
+  deleteItem = (id) =>{
+    console.log(id);
+    let items = this.state.items.filter(it=> it.id !== id);
+    this.setState({items});
+  } 
+
+  AddItemHandler = (item) =>{
+      item.id = Math.floor((Math.random()*1000000));
+      let items = this.state.items;
+      items.push(item);
+      this.setState({items});
+      console.log(this.state.items);
+  }
+
+  render(){
+    return (
+      <div className="App container">
+        <h1 className="text-center">To Do List</h1>
+        <TodoItems items={this.state.items} deleteItem={this.deleteItem}/>
+        <AddItem AddItemHandler={this.AddItemHandler}/>
+      </div>
+    );
+  }
 }
 
 export default App;
